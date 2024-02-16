@@ -37,16 +37,17 @@ jobs:
             build: "musllinux_"
             artifact_suffix: "musllinux_aarch64"
             use_qemu: true
-          - os: ubuntu-latest
-            arch: "ppc64le"
-            build: "manylinux_"
-            artifact_suffix: "manylinux_ppc64le"
-            use_qemu: true
-          - os: ubuntu-latest
-            arch: "ppc64le"
-            build: "musllinux_"
-            artifact_suffix: "musllinux_ppc64le"
-            use_qemu: true
+          # tippecanoe appears to build but fail to run?
+          # - os: ubuntu-latest
+          #   arch: "ppc64le"
+          #   build: "manylinux_"
+          #   artifact_suffix: "manylinux_ppc64le"
+          #   use_qemu: true
+          # - os: ubuntu-latest
+          #   arch: "ppc64le"
+          #   build: "musllinux_"
+          #   artifact_suffix: "musllinux_ppc64le"
+          #   use_qemu: true
           - os: ubuntu-latest
             arch: "s390x"
             build: "manylinux_"
