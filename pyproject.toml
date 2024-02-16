@@ -1,0 +1,69 @@
+[build-system]
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "tippecanoe"
+authors = [
+    {name = "Ryan Mast", email = "mast9@llnl.gov"},
+]
+description = "Builds vector tilesets from large (or small) collections of GeoJSON, FlatGeobuf, or CSV features"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["tags!"]
+license = {text = "BSD License"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Utilities",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/felt/tippecanoe"
+Download = "https://github.com/felt/tippecanoe/releases"
+"Issue Tracker" = "https://github.com/felt/tippecanoe/issues"
+"Source Code" = "https://github.com/felt/tippecanoe"
+
+[project.scripts]
+tippecanoe = "tippecanoe:tippecanoe"
+tile-join = "tippecanoe:tile_join"
+tippecanoe-decode = "tippecanoe:tippecanoe_decode"
+tippecanoe-enumerate = "tippecanoe:tippecanoe_enumerate"
+tippecanoe-json-tool = "tippecanoe:tippecanoe_json_tool"
+tippecanoe-overzoom = "tippecanoe:tippecanoe_overzoom"
+
+[tool.cibuildwheel]
+test-command = [
+  "tippecanoe --version",
+]
+
+[tool.scikit-build]
+minimum-version = "0.8"
+cmake.version = ">=3.20"
+#build-dir = "build/{wheel_tag}"  # this can be used to speed up builds while testing
+wheel.install-dir = "tippecanoe"
+wheel.py-api = "py2.py3"
+wheel.expand-macos-universal-tags = true
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+sdist.include = ["tippecanoe/_version.py"]
+sdist.exclude = ["build", "dist", ".vscode", "venv"]
+sdist.cmake = true
+
+[tool.setuptools_scm]  # Section required
+version_scheme = "no-guess-dev"  # Works well with SKBUILD version having postN and devM tags dropped for fetching upstream version based on git tags...
+version_file = "tippecanoe/_version.py"
