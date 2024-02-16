@@ -43,11 +43,11 @@ jobs:
           #   build: "manylinux_"
           #   artifact_suffix: "manylinux_ppc64le"
           #   use_qemu: true
-          # - os: ubuntu-latest
-          #   arch: "ppc64le"
-          #   build: "musllinux_"
-          #   artifact_suffix: "musllinux_ppc64le"
-          #   use_qemu: true
+          - os: ubuntu-latest
+            arch: "ppc64le"
+            build: "musllinux_"
+            artifact_suffix: "musllinux_ppc64le"
+            use_qemu: true
           - os: ubuntu-latest
             arch: "s390x"
             build: "manylinux_"
