@@ -25,7 +25,7 @@ jobs:
           echo "New version (raw): $new_version_raw"
 
           new_version=$(git -c 'versionsort.suffix=-' \
-            ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/felt/tippecanoe/ 'v*.*.*'\
+            ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/felt/tippecanoe/ '*.*.*'\
             | tail --lines=1\
             | cut --delimiter='/' --fields=3\
             | grep -Po '\d+(\.\d+)+')
