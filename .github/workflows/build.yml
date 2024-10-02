@@ -59,7 +59,7 @@ jobs:
             artifact_suffix: "musllinux_s390x"
             use_qemu: true
           - os: macos-14
-            arch: "arm64 universal2 x86_64"
+            arch: "universal2"
             build: ""
             artifact_suffix: "macos"
             use_qemu: false
