@@ -32,7 +32,13 @@ if(WIN32)
   set(_tippecanoe_build_flags "${_tippecanoe_build_flags} -static -static-libgcc -static-libstdc++")
 endif()
 
-message(STATUS "CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
+if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+  set(OSX_TARGET_FLAG "--target=x86_64-apple-macos10.9")
+elseif(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+  set(OSX_TARGET_FLAG "--target=arm64-apple-macos11")
+else()
+  set(OSX_TARGET_FLAG "")
+endif()
 
 # tippecanoe
 set(TIPPECANOE_SOURCE_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-src)
@@ -45,7 +51,7 @@ ExternalProject_add(TIPPECANOE
   URL "https://github.com/felt/tippecanoe/archive/refs/tags/${TIPPECANOE_VERSION}.zip"
   # URL_HASH "SHA256="
   CONFIGURE_COMMAND ""
-  BUILD_COMMAND make -j
+  BUILD_COMMAND ${CMAKE_COMMAND} -E env CFLAGS="${OSX_TARGET_FLAG}" CXXFLAGS="${OSX_TARGET_FLAG}" make -j
   BUILD_IN_SOURCE ON
   INSTALL_COMMAND make -j install PREFIX=<INSTALL_DIR>
   )
