@@ -59,7 +59,7 @@ jobs:
             artifact_suffix: "musllinux_s390x"
             use_qemu: true
           - os: macos-14
-            arch: "universal2"
+            arch: "arm64 x86_64"
             build: ""
             artifact_suffix: "macos"
             use_qemu: false
@@ -89,7 +89,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.21.1
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
-          CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
+          CIBW_ARCHS_MACOS: "x86_64 arm64"
           CIBW_BUILD: "cp312-${{ matrix.build }}*"
 
       - uses: actions/upload-artifact@v4

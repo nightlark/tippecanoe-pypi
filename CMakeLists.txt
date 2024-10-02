@@ -32,6 +32,8 @@ if(WIN32)
   set(_tippecanoe_build_flags "${_tippecanoe_build_flags} -static -static-libgcc -static-libstdc++")
 endif()
 
+message(STATUS "CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
+
 # tippecanoe
 set(TIPPECANOE_SOURCE_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-src)
 set(TIPPECANOE_BINARY_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-build)
