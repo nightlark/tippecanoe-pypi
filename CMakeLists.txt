@@ -32,20 +32,54 @@ if(WIN32)
   set(_tippecanoe_build_flags "${_tippecanoe_build_flags} -static -static-libgcc -static-libstdc++")
 endif()
 
+if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+  set(OSX_TARGET_FLAG "--target=x86_64-apple-macos10.9")
+elseif(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+  set(OSX_TARGET_FLAG "--target=arm64-apple-macos11")
+else()
+  set(OSX_TARGET_FLAG "")
+endif()
+
 # tippecanoe
 set(TIPPECANOE_SOURCE_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-src)
 set(TIPPECANOE_BINARY_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-build)
+set(TIPPECANOE_URL "https://github.com/felt/tippecanoe/archive/refs/tags/${TIPPECANOE_VERSION}.zip")
 
 set(TIPPECANOE_INSTALL_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-install)
-ExternalProject_add(TIPPECANOE
-  SOURCE_DIR ${TIPPECANOE_SOURCE_DIR}
-  INSTALL_DIR ${TIPPECANOE_INSTALL_DIR}
-  URL "https://github.com/felt/tippecanoe/archive/refs/tags/${TIPPECANOE_VERSION}.zip"
-  # URL_HASH "SHA256="
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND make -j
-  BUILD_IN_SOURCE ON
-  INSTALL_COMMAND make -j install PREFIX=<INSTALL_DIR>
-  )
+
+# Makefile based builds on macOS are weird and painful when cross-compiling...
+# Setting env vars was the only way that worked to get the a working --target option to the compiler
+if(APPLE)
+  if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+    set(OSX_TARGET_FLAG "--target=x86_64-apple-macos10.9")
+  elseif(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+    set(OSX_TARGET_FLAG "--target=arm64-apple-macos11")
+  else()
+    set(OSX_TARGET_FLAG "")
+  endif()
+  ExternalProject_add(TIPPECANOE
+    SOURCE_DIR ${TIPPECANOE_SOURCE_DIR}
+    INSTALL_DIR ${TIPPECANOE_INSTALL_DIR}
+    URL ${TIPPECANOE_URL}
+    # URL_HASH "SHA256="
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ${CMAKE_COMMAND} -E env CFLAGS="${OSX_TARGET_FLAG}" CXXFLAGS="${OSX_TARGET_FLAG}" make -j
+    BUILD_IN_SOURCE ON
+    INSTALL_COMMAND make -j install PREFIX=<INSTALL_DIR>
+    )
+else()
+  # But other OSes have issues building with overriding those env vars to be empty
+  ExternalProject_add(TIPPECANOE
+    SOURCE_DIR ${TIPPECANOE_SOURCE_DIR}
+    INSTALL_DIR ${TIPPECANOE_INSTALL_DIR}
+    URL ${TIPPECANOE_URL}
+    # URL_HASH "SHA256="
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND make -j
+    BUILD_IN_SOURCE ON
+    INSTALL_COMMAND make -j install PREFIX=<INSTALL_DIR>
+    )
+endif()
+
 install(PROGRAMS ${TIPPECANOE_INSTALL_DIR}/bin/ DESTINATION bin)
 install(FILES ${TIPPECANOE_INSTALL_DIR}/share/ DESTINATION share)
