@@ -17,13 +17,6 @@ jobs:
           echo "Old version: $old_version"
           echo "old_version=$old_version" >> $GITHUB_OUTPUT
 
-          new_version_raw=$(git -c 'versionsort.suffix=-' \
-            ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/felt/tippecanoe/ 'v*.*.*'\
-            | tail --lines=1\
-            | cut --delimiter='/' --fields=3)
-
-          echo "New version (raw): $new_version_raw"
-
           new_version=$(git -c 'versionsort.suffix=-' \
             ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/felt/tippecanoe/ '*.*.*'\
             | tail --lines=1\
@@ -33,7 +26,7 @@ jobs:
           echo "New version: $new_version"
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
 
-          if [ "$old_version" != "$new_version" ] && [ "v$new_version" = "$new_version_raw" ]; then
+          if [ "$old_version" != "$new_version" ]; then
             echo "set(TIPPECANOE_VERSION $new_version)" > tippecanoe_version.cmake
             echo "tippecanoe version updated"
           else
