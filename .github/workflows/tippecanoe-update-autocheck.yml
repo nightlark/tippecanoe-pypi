@@ -38,7 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: Update tippecanoe dependencies
+            commit-message: Update tippecanoe version (${{ steps.check-tippecanoe.outputs.new_version }})
             title: Update tippecanoe version (${{ steps.check-tippecanoe.outputs.new_version }})
             body: |
               - Update tippecanoe version to ${{ steps.check-tippecanoe.outputs.new_version }}
