@@ -51,7 +51,7 @@ set(TIPPECANOE_INSTALL_DIR ${CMAKE_BINARY_DIR}/TIPPECANOE-install)
 # Setting env vars was the only way that worked to get the a working --target option to the compiler
 if(APPLE)
   if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
-    set(OSX_TARGET_FLAG "--target=x86_64-apple-macos10.9")
+    set(OSX_TARGET_FLAG "--target=x86_64-apple-macos10.14")
   elseif(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
     set(OSX_TARGET_FLAG "--target=arm64-apple-macos11")
   else()
