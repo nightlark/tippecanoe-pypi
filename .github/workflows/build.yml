@@ -27,16 +27,16 @@ jobs:
             build: ""
             artifact_suffix: "linux_i686"
             use_qemu: false
-          - os: ubuntu-latest
+          - os: ubuntu-24.04-arm
             arch: "aarch64"
             build: "manylinux_"
             artifact_suffix: "manylinux_aarch64"
-            use_qemu: true
-          - os: ubuntu-latest
+            use_qemu: false
+          - os: ubuntu-24.04-arm
             arch: "aarch64"
             build: "musllinux_"
             artifact_suffix: "musllinux_aarch64"
-            use_qemu: true
+            use_qemu: false
           # tippecanoe appears to build but fail to run?
           # - os: ubuntu-latest
           #   arch: "ppc64le"
