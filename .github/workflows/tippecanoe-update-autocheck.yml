@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check and update tippecanoe version
         id: check-tippecanoe
         run: |
