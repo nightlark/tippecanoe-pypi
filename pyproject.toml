@@ -52,6 +52,9 @@ test-command = [
   "tippecanoe --version",
 ]
 
+[tool.cibuildwheel.linux]
+before-all = "yum install -y sqlite-devel || apk add sqlite-dev"
+
 [tool.scikit-build]
 minimum-version = "0.8"
 cmake.version = ">=3.20"
